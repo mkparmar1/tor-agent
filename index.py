@@ -3,13 +3,12 @@ import socket
 from stem import Signal
 from stem.control import Controller
 import requests
-from fake_useragent import UserAgent
+from random_user_agent.user_agent import UserAgent
 import threading
 import queue
 import time
 import json
 import logging
-
 
 # Configure logging to print in JSON format
 logging.basicConfig(filename='traffic_log.json', level=logging.INFO)
@@ -80,10 +79,10 @@ def worker():
 
             session = get_session()
 
-            # Generate a random User-Agent for the request
+            # Generate a random User-Agent for the request using random_user_agent
             try:
-                ua = UserAgent(use_cache_server=True)  # Set to use the cache server
-                user_agent = ua.random  # Try to get a random user-agent
+                ua = UserAgent()  # Initialize UserAgent object
+                user_agent = ua.get_random_user_agent()  # Try to get a random user-agent
                 print(f"Generated User-Agent: {user_agent}")
             except Exception as e:
                 print(f"Error generating random User-Agent: {e}")
